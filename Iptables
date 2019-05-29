@@ -1,0 +1,13 @@
+#Defult docker install only isolate incoming connection to containers, while outgoing connections from containers are not restricted. The following iptables rules should block out going from containers (169.254.0.0/16) and only allow certain ones (169.254.100.0/24) to reach internet.
+
+
+Chain DOCKER-USER (1 references)
+target     prot opt source               destination
+ACCEPT     udp  --  link-local/16        anywhere             udp dpt:domain
+ACCEPT     all  --  link-local/16       !link-local/16        ctstate RELATED,ESTABLISHED
+DROP       all  --  169.254.100.0/24     10.0.0.0/8
+DROP       all  --  169.254.100.0/24     172.16.0.0/12
+DROP       all  --  169.254.100.0/24     192.168.0.0/16
+ACCEPT     all  --  169.254.100.0/24    !link-local/16
+DROP       all  --  link-local/16       !link-local/16
+RETURN     all  --  anywhere             anywhere
