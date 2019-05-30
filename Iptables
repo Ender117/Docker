@@ -3,8 +3,8 @@
 
 Chain DOCKER-USER (1 references)
 target     prot opt source               destination
-ACCEPT     icmp --  link-local/16        anywhere
-ACCEPT     udp  --  link-local/16        anywhere             udp dpt:domain
+ACCEPT     udp  --  link-local/16       !link-local/16        udp dpt:domain
+ACCEPT     icmp --  link-local/16       !link-local/16
 ACCEPT     all  --  link-local/16       !link-local/16        ctstate RELATED,ESTABLISHED
 DROP       all  --  169.254.100.0/24     10.0.0.0/8
 DROP       all  --  169.254.100.0/24     172.16.0.0/12
